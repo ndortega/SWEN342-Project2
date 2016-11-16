@@ -12,5 +12,9 @@
 hs_err_pid*
 
 .idea/*
-
-342CGrepActors.iml
+.gitignore
+.idea/
+SWEN342-Project2.iml
+src/main/resources/
+src/test/
+target/
