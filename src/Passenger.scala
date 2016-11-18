@@ -8,9 +8,6 @@ import akka.actor.Actor
   * Passengers place their baggage in the baggage scanner as soon as they enter a queue.
   * If a passenger and his or her baggage are both passed, the passenger leaves the system. Otherwise, the passenger goes to jail.
   */
-class Passenger extends Actor {
+class Passenger{
 
-  override def receive = {
-    case x: String => println("Jail -> " + x);
-  }
 }

@@ -40,8 +40,8 @@ object Driver {
 
 
     // create all passengers
-    val allPassengers = new ArrayBuffer[ActorRef]
-    for( i <- 0 to MAX_PASSENGERS ) allPassengers += system.actorOf(Props(new Passenger))
+    val allPassengers = new ArrayBuffer[Passenger]
+    for( i <- 0 to MAX_PASSENGERS ) allPassengers += new Passenger
 
     // check the passengers documents and collect all the ones that pass
     val approvedPassengers = allPassengers.collect( documentCheck() )
@@ -57,15 +57,15 @@ object Driver {
     * This method simulates the an inspection which the passenger fails 20%
     * of the time
     *
-    * The method gets passed an ActorRef and if the randomly generated number
-    * passes our test, then the same ActorRef is returned and added to the
+    * The method gets passed an Passenger and if the randomly generated number
+    * passes our test, then the same Passenger is returned and added to the
     * collection
     *
     * Generates a random integer between 0 (inclusive) and 100(exclusive)
     * so the real range is 0-99, which includes 100 integers.
     * @return returns true 80% of the time
     */
-  def documentCheck(): PartialFunction[ActorRef,ActorRef] ={
+  def documentCheck(): PartialFunction[Passenger,Passenger] ={
     case x if Random.nextInt(100) > 20 => x
   }
 
