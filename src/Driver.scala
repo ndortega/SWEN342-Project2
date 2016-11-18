@@ -29,19 +29,28 @@ object Driver {
     for( i <- 0 to MAX_LINES) {
 
       // Creates the actors that make up a line
-      val bodyScanActor = system.actorOf(Props(new BodyScan))
-      val baggageActor = system.actorOf(Props(new BaggageScan))
+      val security = system.actorOf(Props(new SecurityStation(jail)))
+      val bodyScanActor = system.actorOf(Props(new BodyScan(security)))
+      val baggageActor = system.actorOf(Props(new BaggageScan(security)))
       val queue = system.actorOf(Props(new Queue))
-      val security = system.actorOf(Props(new SecurityStation))
 
-      allLines += system.actorOf(Props( new Line(i,queue,baggageActor,bodyScanActor,security,jail)  ))
+      allLines += system.actorOf(Props( new Line(i,queue,baggageActor,bodyScanActor,security)  ))
     }
+
+    // create and populate circular design
+    val circularBuffer = new CircularBuffer[ActorRef](MAX_LINES)
+    allLines.foreach(circularBuffer.add(_))
+
+    // grab the iterator that points to the circular buffer
+    val lineIterator = circularBuffer.iterator
+
+
 
 
 
     // create all passengers
-    val allPassengers = new ArrayBuffer[Passenger]
-    for( i <- 0 to MAX_PASSENGERS ) allPassengers += new Passenger
+    val allPassengers = new ArrayBuffer[PASSENGER]
+    for( i <- 0 to MAX_PASSENGERS ) allPassengers += new PASSENGER(i)
 
     // check the passengers documents and collect all the ones that pass
     val approvedPassengers = allPassengers.collect( documentCheck() )
@@ -63,13 +72,44 @@ object Driver {
     *
     * Generates a random integer between 0 (inclusive) and 100(exclusive)
     * so the real range is 0-99, which includes 100 integers.
-    * @return returns true 80% of the time
+    * @return returns false 20% of the time
     */
-  def documentCheck(): PartialFunction[Passenger,Passenger] ={
+  def documentCheck(): PartialFunction[PASSENGER,PASSENGER] ={
     case x if Random.nextInt(100) > 20 => x
   }
 
 
 
 
+  // taken from https://gist.github.com/gclaramunt/1389311
+  class CirculrBufferIterator[T](buffer:Array[T], start:Int) extends Iterator[T]{
+    var idx=0
+    override def hasNext = idx<buffer.size
+    override def next()={
+      val i=idx
+      idx=idx+1
+      buffer(i)
+    }
+  }
+
+
+  class CircularBuffer[T](size:Int)(implicit m:Manifest[T]) extends Seq[T] {
+    val buffer = new Array[T](size);
+    var bIdx = 0;
+
+    override def apply(idx: Int): T = buffer((bIdx + idx) % size)
+
+    override def length = size
+
+    override def iterator = new CirculrBufferIterator[T](buffer, bIdx)
+
+    def add(e: T) = {
+      buffer(bIdx) = e
+      bIdx = (bIdx + 1) % size
+    }
+  }
+
+
+
 }
+

@@ -10,8 +10,7 @@ class Line(
             queue: ActorRef,
             baggageScanner: ActorRef,
             bodyScan: ActorRef,
-            security: ActorRef,
-            jail: ActorRef  ) extends Actor{
+            security: ActorRef  ) extends Actor{
 
 
 
