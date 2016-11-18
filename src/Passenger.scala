@@ -1,4 +1,4 @@
-import akka.actor.UntypedActor
+import akka.actor.Actor
 
 /**
   * Passengers enter the system from a main driver program.
@@ -8,11 +8,9 @@ import akka.actor.UntypedActor
   * Passengers place their baggage in the baggage scanner as soon as they enter a queue.
   * If a passenger and his or her baggage are both passed, the passenger leaves the system. Otherwise, the passenger goes to jail.
   */
-class Passenger extends UntypedActor {
+class Passenger extends Actor {
 
-
-  override def onReceive(message: Any): Unit = message match {
-    case _ => "default"
-
+  override def receive: Receive = {
+    case _=> "default"
   }
 }
