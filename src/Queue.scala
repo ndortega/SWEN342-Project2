@@ -1,9 +1,9 @@
-import akka.actor.Actor
+import akka.actor.{Actor, ActorRef}
 
 /**
   * Each queue is identified with the line it is in.
   */
-class Queue extends Actor{
+class Queue(baggageScan: ActorRef, bodyScan: ActorRef) extends Actor{
   override def receive = {
     case x: String => println("Queue -> " + x);
     case SHUTDOWN => println("Shutting down Queue")

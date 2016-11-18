@@ -32,7 +32,7 @@ object Driver {
       val security = system.actorOf(Props(new SecurityStation(jail)))
       val bodyScanActor = system.actorOf(Props(new BodyScan(security)))
       val baggageActor = system.actorOf(Props(new BaggageScan(security)))
-      val queue = system.actorOf(Props(new Queue))
+      val queue = system.actorOf(Props(new Queue(baggageActor,bodyScanActor)))
 
       allLines += system.actorOf(Props( new Line(i,queue,baggageActor,bodyScanActor,security)  ))
     }
