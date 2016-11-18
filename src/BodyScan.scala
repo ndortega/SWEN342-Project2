@@ -1,3 +1,4 @@
+
 import akka.actor.Actor
 
 /**
@@ -8,5 +9,6 @@ class BodyScan extends Actor{
 
   override def receive = {
     case x: String => println("Body Scan -> " + x);
+    case SHUTDOWN => println("Shutting down Body Scanner")
   }
 }

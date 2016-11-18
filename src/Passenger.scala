@@ -10,7 +10,7 @@ import akka.actor.Actor
   */
 class Passenger extends Actor {
 
-  override def receive: Receive = {
-    case _=> "default"
+  override def receive = {
+    case x: String => println("Jail -> " + x);
   }
 }

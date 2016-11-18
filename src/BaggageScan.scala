@@ -6,6 +6,7 @@ import akka.actor.Actor
   */
 class BaggageScan extends Actor{
   override def receive = {
-    case x: String => println("Baggage Scan -> " + x);
+    case x: String => println("Baggage Scan -> " + x)
+    case SHUTDOWN => println("Shutting down Baggage Scanner")
   }
 }
