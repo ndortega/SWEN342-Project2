@@ -1,3 +1,5 @@
+package main.scala
+
 /**
   * At the beginning of the day, the system will initialize and turn on all of the scanners.
   *
@@ -8,7 +10,7 @@ object Driver {
 
   def main(args: Array[String]): Unit = {
 
-      println("hello world")
+    println("hello world")
   }
 
 }
