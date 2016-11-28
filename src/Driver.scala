@@ -82,8 +82,8 @@ object Driver {
     var idx= 0
     var size = buffer.size
     def next()={
-      idx = idx + 1
       buffer(idx % size)
+      idx = idx + 1
     }
   }
 
