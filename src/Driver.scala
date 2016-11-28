@@ -38,14 +38,7 @@ object Driver {
     }
 
     // create and populate circular design
-    val circularBuffer = new CircularBuffer[ActorRef](MAX_LINES)
-    allLines.foreach(circularBuffer.add(_))
-
-    // grab the iterator that points to the circular buffer
-    val lineIterator = circularBuffer.iterator
-
-
-
+    val circularBuffer = new CircularBuffer[ActorRef](allLines)
 
 
     // create all passengers
@@ -79,35 +72,21 @@ object Driver {
   }
 
 
-
-
-  // taken from https://gist.github.com/gclaramunt/1389311
-  class CirculrBufferIterator[T](buffer:Array[T], start:Int) extends Iterator[T]{
-    var idx=0
-    override def hasNext = idx<buffer.size
-    override def next()={
-      val i=idx
-      idx=idx+1
-      buffer(i)
+  /**
+    * This class takes an ArrayBuffer and can iterate indefinltey through the passed
+    * in ArrayBuffer
+    * @param buffer
+    * @tparam T
+    */
+  class CircularBuffer[T](buffer: ArrayBuffer[T]){
+    var idx= 0
+    var size = buffer.size
+    def next()={
+      idx = idx + 1
+      buffer(idx % size)
     }
   }
 
-
-  class CircularBuffer[T](size:Int)(implicit m:Manifest[T]) extends Seq[T] {
-    val buffer = new Array[T](size);
-    var bIdx = 0;
-
-    override def apply(idx: Int): T = buffer((bIdx + idx) % size)
-
-    override def length = size
-
-    override def iterator = new CirculrBufferIterator[T](buffer, bIdx)
-
-    def add(e: T) = {
-      buffer(bIdx) = e
-      bIdx = (bIdx + 1) % size
-    }
-  }
 
 
 
