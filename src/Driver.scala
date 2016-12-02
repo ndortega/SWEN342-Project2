@@ -48,6 +48,11 @@ object Driver {
     val approvedPassengers = allPassengers.collect( documentCheck() )
 
 
+    for(passenger <- approvedPassengers){
+      circularIterator.next() ! passenger
+    }
+
+
 
     // shuts down the actor system
     system.terminate()

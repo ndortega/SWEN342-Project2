@@ -16,6 +16,8 @@ class Line(
 
   override def receive = {
     case x: String => println("Body Scan -> " + x);
+    case x: PASSENGER => queue ! x
+
     case SHUTDOWN => {
       println("Shutting down Line")
 

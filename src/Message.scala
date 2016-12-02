@@ -9,8 +9,13 @@ class Message
 
   case object SHUTDOWN extends Message
   case class PASSENGER(id: Int) extends Message
-  case class PASS(passenger: PASSENGER) extends Message
-  case class FAIL(passenger: PASSENGER) extends Message
+
+  case class BAGPASS(passenger: PASSENGER) extends Message
+  case class BAGFAIL(passenger: PASSENGER) extends Message
+
+  case class BODYPASS(passenger: PASSENGER) extends Message
+  case class SCANFAIL(passenger: PASSENGER) extends Message
+
   case class BAG(passenger: PASSENGER) extends Message
 
 
