@@ -3,9 +3,12 @@
   */
 class Message
 
-  // Instead of java enums, we use case objects that can be used in pattern matching
+  // Instead of java enums, we use case objects and case classes that can be sent
+  // between the actors as messages. The "case" keyword makes this following object
+  // or class able to be used in pattern matching.
+
   case object SHUTDOWN extends Message
-  case class PASSENGER(id: Int)
+  case class PASSENGER(id: Int) extends Message
   case class PASS(passenger: PASSENGER) extends Message
   case class FAIL(passenger: PASSENGER) extends Message
   case class BAG(passenger: PASSENGER) extends Message

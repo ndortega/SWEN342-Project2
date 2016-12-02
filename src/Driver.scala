@@ -38,10 +38,7 @@ object Driver {
     }
 
     // create and populate circular design
-    val circularBuffer = new CircularBuffer[ActorRef](allLines)
-
-    for(i<- 0 to 10) println(circularBuffer.next())
-
+    val circularIterator = new CircularIterator[ActorRef](allLines)
 
     // create all passengers
     val allPassengers = new ArrayBuffer[PASSENGER]
@@ -80,7 +77,7 @@ object Driver {
     * @param buffer
     * @tparam T
     */
-  class CircularBuffer[T](buffer: ArrayBuffer[T]){
+  class CircularIterator[T](buffer: ArrayBuffer[T]){
     var idx= -1 // so that we start at index 0 when we call the next() function
     var size = buffer.size
     def next()={
