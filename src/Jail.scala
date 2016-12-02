@@ -11,7 +11,10 @@ class Jail extends Actor{
   val jailedPassengers = new util.LinkedList[PASSENGER]()
 
   override def receive = {
-    case x: PASSENGER => { jailedPassengers.add(x) }
+    case x: PASSENGER => {
+      System.out.println("Passenger " + x.id + " is entering jail.")
+      jailedPassengers.add(x)
+    }
 
     case x: String => println("Jail -> " + x);
     case SHUTDOWN => println("sending all inmates to prison")

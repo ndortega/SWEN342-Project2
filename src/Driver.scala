@@ -14,7 +14,7 @@ import scala.util.Random
   */
 object Driver {
   val MAX_PASSENGERS = 20
-  val MAX_LINES = 10
+  val MAX_LINES = 2
 
   def main(args: Array[String]): Unit = {
 
@@ -29,10 +29,10 @@ object Driver {
     for( i <- 0 to MAX_LINES) {
 
       // Creates the actors that make up a line
-      val security = system.actorOf(Props(new SecurityStation(jail)))
-      val bodyScanActor = system.actorOf(Props(new BodyScan(security)))
-      val baggageActor = system.actorOf(Props(new BaggageScan(security)))
-      val queue = system.actorOf(Props(new Queue(baggageActor,bodyScanActor)))
+      val security = system.actorOf(Props(new SecurityStation(jail, i)))
+      val bodyScanActor = system.actorOf(Props(new BodyScan(security, i)))
+      val baggageActor = system.actorOf(Props(new BaggageScan(security, i)))
+      val queue = system.actorOf(Props(new Queue(baggageActor,bodyScanActor, i)))
 
       allLines += system.actorOf(Props( new Line(i,queue,baggageActor,bodyScanActor,security)  ))
     }
@@ -53,8 +53,7 @@ object Driver {
         circularIterator.next() ! passenger
     }
 
-
-
+    Thread.sleep(1000)
     // shuts down the actor system
     system.terminate()
   }
