@@ -13,13 +13,25 @@ import scala.util.Random
   * scanner is turned off.
   */
 object Driver {
-  val MAX_PASSENGERS = 20
-  val MAX_LINES = 2
+  val usage = """
+   Usage: driver [max-passengers num] [max-Lines num]
+              """
 
   def main(args: Array[String]): Unit = {
-
+    var MAX_LINES: Int = 0;
+    var MAX_PASSENGERS: Int = 0;
     // set up our ActorSystem
     val system = ActorSystem.create()
+    if (args.length == 0)
+    {
+      println(usage)
+      sys.exit(1)
+    }
+    else
+    {
+      MAX_LINES = args(0).toInt;
+      MAX_PASSENGERS = args(1).toInt;
+    }
 
     // There is only one jail
     val jail = system.actorOf(Props(new Jail))
@@ -69,6 +81,7 @@ object Driver {
     *
     * Generates a random integer between 0 (inclusive) and 100(exclusive)
     * so the real range is 0-99, which includes 100 integers.
+    *
     * @return returns false 20% of the time
     */
   def documentCheck(): PartialFunction[PASSENGER,PASSENGER] ={
@@ -80,6 +93,7 @@ object Driver {
   /**
     * This class takes an ArrayBuffer and can iterate indefinltey through the passed
     * in ArrayBuffer
+    *
     * @param buffer
     * @tparam T
     */
