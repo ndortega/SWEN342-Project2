@@ -14,7 +14,7 @@ class Message
   case class BAGFAIL(passenger: PASSENGER) extends Message
 
   case class BODYPASS(passenger: PASSENGER) extends Message
-  case class SCANFAIL(passenger: PASSENGER) extends Message
+  case class BODYFAIL(passenger: PASSENGER) extends Message
 
   case class BAG(passenger: PASSENGER) extends Message
 

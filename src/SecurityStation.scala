@@ -16,7 +16,7 @@ class SecurityStation(jail: ActorRef) extends Actor{
 
   override def receive = {
     case x: BODYPASS => {
-      var bagToRemove:BAG = null
+      var bagToRemove:BAGPASS = null
       var foundBag = false
       passBagLine.forEach( bag => {
         if (bag.passenger.id == x.passenger.id){
@@ -48,7 +48,28 @@ class SecurityStation(jail: ActorRef) extends Actor{
 
     case x: BAGFAIL => {
       failBagLine.add(x)
+      var passengerFailed = false
+      failPassenger.forEach( passenger => {
+        if(passenger.id == x.passenger.id){
+          passengerFailed = true
+        }
+      })
+      if(!passengerFailed){
+        jail ! x.passenger
+      }
+    }
 
+    case x: BODYFAIL => {
+      failPassenger.add(x.passenger)
+      var bagFailed = false
+      failBagLine.forEach( bag => {
+        if(bag.passenger.id == x.passenger.id){
+          bagFailed = true
+        }
+      })
+      if(!bagFailed){
+        jail ! x.passenger
+      }
     }
 
     case x: String => println("security station -> " + x);

@@ -11,7 +11,7 @@ class BodyScan(security: ActorRef) extends Actor{
 
   override def receive = {
     case x: PASSENGER => {
-      val msg = if (Random.nextInt(100) > 20) new BODYPASS(x) else new SCANFAIL(x)
+      val msg = if (Random.nextInt(100) > 20) new BODYPASS(x) else new BODYFAIL(x)
       security ! msg
     }
 
