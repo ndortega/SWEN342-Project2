@@ -49,7 +49,8 @@ object Driver {
 
 
     for(passenger <- approvedPassengers){
-      circularIterator.next() ! passenger
+      if(passenger != null)
+        circularIterator.next() ! passenger
     }
 
 
@@ -73,6 +74,7 @@ object Driver {
     */
   def documentCheck(): PartialFunction[PASSENGER,PASSENGER] ={
     case x if Random.nextInt(100) > 20 => x
+    case default => println("passenger " + default.id +" rejected"); null; // default case
   }
 
 
