@@ -17,6 +17,10 @@ class Jail extends Actor{
     }
 
     case x: String => println("Jail -> " + x);
-    case SHUTDOWN => println("sending all inmates to prison")
+    case SHUTDOWN => {
+      jailedPassengers.forEach(passenger=> {
+        println("Passenger " + passenger.id + " is being sent to permanent detention.")
+      })
+    }
   }
 }
