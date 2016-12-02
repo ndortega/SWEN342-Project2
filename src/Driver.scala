@@ -29,8 +29,8 @@ object Driver {
     }
     else
     {
-      MAX_LINES = args(0).toInt;
-      MAX_PASSENGERS = args(1).toInt;
+      MAX_PASSENGERS = args(0).toInt;
+      MAX_LINES = args(1).toInt;
     }
 
     // There is only one jail
