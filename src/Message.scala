@@ -7,8 +7,15 @@ class Message
   // between the actors as messages. The "case" keyword makes this following object
   // or class able to be used in pattern matching.
 
-  case object SHUTDOWN extends Message
+
   case class PASSENGER(id: Int) extends Message
+
+  case object BODYSCANSHUTDOWN extends Message // one both are recieved by the security station, security signals that
+  case object BAGSCANSHUTDOWN extends Message   // they "COMPLETED" to the Jail
+
+  case object COMPLETED extends Message // sent by security system when completed
+  case object PoisonPill
+
 
   case class BAGPASS(passenger: PASSENGER) extends Message
   case class BAGFAIL(passenger: PASSENGER) extends Message

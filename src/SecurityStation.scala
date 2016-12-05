@@ -1,6 +1,6 @@
 import java.util
 
-import akka.actor.{Actor, ActorRef}
+import akka.actor.{Actor, ActorRef, PoisonPill}
 
 /**
   * Each security station is identified with the line it is in.
@@ -13,6 +13,11 @@ class SecurityStation(jail: ActorRef, lineID: Int) extends Actor{
 
   val passBagLine = new util.LinkedList[BAGPASS]()
   val failBagLine = new util.LinkedList[BAGFAIL]()
+
+  var isBagScanDone = false
+  var isBodyScanDone = false
+
+  var COMPLETED_VAL = 2
 
   override def receive = {
     case x: BODYPASS => {
@@ -84,7 +89,21 @@ class SecurityStation(jail: ActorRef, lineID: Int) extends Actor{
       }
     }
 
-    case x: String => println("security station -> " + x);
-    case SHUTDOWN => println("Shutting down security station")
+    /**
+      * if the baggage scanner is done, check to see if the body scanner is also done
+      * if so, messaged the jail.
+      * else, keep track of the recieved message
+      */
+    case COMPLETED => {
+        if(COMPLETED_VAL == 2) {
+          println("Shutting down Security Scanner")
+          jail ! COMPLETED
+        }
+        else
+          COMPLETED_VAL += 1
+
+    }
+
+
   }
 }

@@ -1,5 +1,5 @@
 
-import akka.actor.{Actor, ActorRef}
+import akka.actor.{Actor, ActorRef, PoisonPill}
 
 import scala.util.Random
 
@@ -24,7 +24,10 @@ class BodyScan(security: ActorRef, lineID: Int) extends Actor{
       security ! msg
     }
 
-    case x: String => println("Body Scan -> " + x);
-    case SHUTDOWN => println("Shutting down Body Scanner")
+    case PoisonPill => {
+      println("Shutting down Body Scanner")
+      security ! COMPLETED
+    }
+
   }
 }

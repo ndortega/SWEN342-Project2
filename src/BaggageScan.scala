@@ -1,6 +1,6 @@
 
 
-import akka.actor.{Actor, ActorRef}
+import akka.actor.{Actor, ActorRef, PoisonPill}
 
 import scala.collection.mutable
 import scala.util.Random
@@ -24,7 +24,9 @@ class BaggageScan(security: ActorRef, lineID: Int) extends Actor{
         }
       security ! msg
     }
-    case x: String => println("Baggage Scan -> " + x)
-    case SHUTDOWN => println("Shutting down Baggage Scanner")
+    case PoisonPill => {
+      println("Shutting down Baggage Scanner")
+      security ! COMPLETED
+    }
   }
 }

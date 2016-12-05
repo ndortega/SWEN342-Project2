@@ -1,4 +1,4 @@
-import akka.actor.{Actor, ActorRef, ActorSystem, Props}
+import akka.actor.{Actor, ActorRef, ActorSystem, PoisonPill, Props}
 
 import scala.collection.mutable.ArrayBuffer
 import scala.util.Random
@@ -16,10 +16,14 @@ object Driver {
   val usage = """
    Usage: driver [max-passengers num] [max-Lines num]
               """
+  var MAX_LINES: Int = 0;
+  var MAX_PASSENGERS: Int = 0;
+
+  def getMAX_LINES() = MAX_LINES
+  def getMAX_PASSENGERS() = MAX_PASSENGERS
 
   def main(args: Array[String]): Unit = {
-    var MAX_LINES: Int = 0;
-    var MAX_PASSENGERS: Int = 0;
+
     // set up our ActorSystem
     val system = ActorSystem.create()
     if (args.length == 0)
@@ -65,10 +69,14 @@ object Driver {
         circularIterator.next() ! passenger
     }
 
-    Thread.sleep(1000)
-    // shuts down the actor system
-    system.terminate()
+    // sends shutdown message to all lines
+    for(line <- allLines){
+        line ! PoisonPill
+    }
+
   }
+
+
 
 
   /**
