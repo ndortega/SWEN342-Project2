@@ -9,8 +9,8 @@ import akka.actor.Actor
   */
 class Jail extends Actor{
   val jailedPassengers = new util.LinkedList[PASSENGER]()
-  val totalLines = Driver.MAX_LINES
-  var completed = 0
+  val totalLines = Driver.MAX_LINES+1
+  var completed = 1
   var isDone = false
 
   override def receive = {

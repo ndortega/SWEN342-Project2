@@ -17,7 +17,7 @@ class SecurityStation(jail: ActorRef, lineID: Int) extends Actor{
   var isBagScanDone = false
   var isBodyScanDone = false
 
-  var COMPLETED_VAL = 2
+  var COMPLETED_VAL = 1
 
   override def receive = {
     case x: BODYPASS => {

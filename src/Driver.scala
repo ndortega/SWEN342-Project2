@@ -16,11 +16,10 @@ object Driver {
   val usage = """
    Usage: driver [max-passengers num] [max-Lines num]
               """
-  var MAX_LINES: Int = 0;
-  var MAX_PASSENGERS: Int = 0;
+  var MAX_LINES: Int = 0
+  var MAX_PASSENGERS: Int = 0
 
-  def getMAX_LINES() = MAX_LINES
-  def getMAX_PASSENGERS() = MAX_PASSENGERS
+
 
   def main(args: Array[String]): Unit = {
 
