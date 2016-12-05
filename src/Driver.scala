@@ -32,8 +32,8 @@ object Driver {
     }
     else
     {
-      MAX_PASSENGERS = args(0).toInt;
-      MAX_LINES = args(1).toInt;
+      MAX_PASSENGERS = args(0).toInt - 1
+      MAX_LINES = args(1).toInt - 1
     }
 
     // There is only one jail
@@ -43,13 +43,14 @@ object Driver {
     val allLines = new ArrayBuffer[ActorRef]
     for( i <- 0 to MAX_LINES) {
 
+      val id = i + 1
       // Creates the actors that make up a line
-      val security = system.actorOf(Props(new SecurityStation(jail, i)))
-      val bodyScanActor = system.actorOf(Props(new BodyScan(security, i)))
-      val baggageActor = system.actorOf(Props(new BaggageScan(security, i)))
-      val queue = system.actorOf(Props(new Queue(baggageActor,bodyScanActor, i)))
+      val security = system.actorOf(Props(new SecurityStation(jail, id)))
+      val bodyScanActor = system.actorOf(Props(new BodyScan(security, id)))
+      val baggageActor = system.actorOf(Props(new BaggageScan(security, id)))
+      val queue = system.actorOf(Props(new Queue(baggageActor,bodyScanActor, id)))
 
-      allLines += system.actorOf(Props( new Line(i,queue,baggageActor,bodyScanActor,security)  ))
+      allLines += system.actorOf(Props( new Line(id,queue,baggageActor,bodyScanActor,security)  ))
     }
 
     // create and populate circular design
@@ -57,7 +58,7 @@ object Driver {
 
     // create all passengers
     val allPassengers = new ArrayBuffer[PASSENGER]
-    for( i <- 0 to MAX_PASSENGERS ) allPassengers += new PASSENGER(i)
+    for( i <- 0 to MAX_PASSENGERS ) allPassengers += new PASSENGER(i+1)
 
     // check the passengers documents and collect all the ones that pass
     val approvedPassengers = allPassengers.collect( documentCheck() )
