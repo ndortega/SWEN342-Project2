@@ -9,8 +9,8 @@ import akka.actor.Actor
   */
 class Jail extends Actor{
   val jailedPassengers = new util.LinkedList[PASSENGER]()
-  val totalLines = Driver.MAX_LINES+1
-  var completed = 1
+  val totalLines = Driver.MAX_LINES
+  var completed = 0
   var isDone = false
 
   override def receive = {
@@ -20,7 +20,6 @@ class Jail extends Actor{
     }
 
     case COMPLETED => {
-
       if(completed == totalLines && !isDone) { // boolean flag ensures we shut down the system once
         isDone = true
         sendToPrison()
@@ -31,7 +30,7 @@ class Jail extends Actor{
     }
   }
 
-  def sendToPrison() ={
+  def sendToPrison() = {
     jailedPassengers.forEach(passenger=> {
       println("Passenger " + passenger.id + " is being sent to permanent detention.")
     })
