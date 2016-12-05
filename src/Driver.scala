@@ -20,7 +20,6 @@ object Driver {
   var MAX_PASSENGERS: Int = 0
 
 
-
   def main(args: Array[String]): Unit = {
 
     // set up our ActorSystem
