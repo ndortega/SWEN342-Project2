@@ -1,3 +1,5 @@
+import java.util.Scanner
+
 import akka.actor.{Actor, ActorRef, ActorSystem, PoisonPill, Props}
 
 import scala.collection.mutable.ArrayBuffer
@@ -22,18 +24,23 @@ object Driver {
 
   def main(args: Array[String]): Unit = {
 
+    val scanner = new Scanner(System.in)
+    println("Welcome to our TSA Security Screen Simulator")
+    println()
+
+    print("Enter number of Passengers: ")
+    MAX_PASSENGERS = scanner.nextInt()
+
+    println()
+
+    print("Enter number of Lines: ")
+    MAX_LINES = scanner.nextInt()
+
+    println("Running simulation..... \n")
+
+
     // set up our ActorSystem
     val system = ActorSystem.create()
-    if (args.length == 0)
-    {
-      println(usage)
-      sys.exit(1)
-    }
-    else
-    {
-      MAX_PASSENGERS = args(0).toInt - 1
-      MAX_LINES = args(1).toInt - 1
-    }
 
     // There is only one jail
     val jail = system.actorOf(Props(new Jail))
