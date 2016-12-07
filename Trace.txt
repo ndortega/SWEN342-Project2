@@ -1,0 +1,76 @@
+
+
+Trace Example
+
+Input Arguments: 5 (passengers) 2 (lines)
+
+following passenger 3
+
+we will mark lines involved with passenger 3 using  "--->".
+-----------------------------------------------------------------------------------
+
+Queue in line 2 received passenger 2.
+Queue in line 1 received passenger 1.
+Queue in line 1 is sending passenger 1 to the body scanner to be scanned.
+Queue in line 2 is sending passenger 2 to the body scanner to be scanned.
+Queue in line 1 is sending passenger 1's bags to the bag scanner to be scanned.
+Queue in line 2 is sending passenger 2's bags to the bag scanner to be scanned.
+Body Scanner in line 2 received passenger 2.
+Body Scanner in line 1 received passenger 1.
+Body Scanner in line 2 is sending passenger 2, who passed, to security to wait for their bag.
+Body Scanner in line 1 is sending passenger 1, who passed, to security to wait for their bag.
+---> Queue in line 1 received passenger 3.
+---> Queue in line 1 is sending passenger 3 to the body scanner to be scanned.
+Bag Scanner in line 1 received passenger 1's bags.
+Bag Scanner in line 1 is sending passenger 1's bags, which passed, to security to wait for their passenger.
+Security Station in line 2 received passenger 2's bags which passed its scan.
+Bag Scanner in line 2 received passenger 2's bags.
+---> Queue in line 1 is sending passenger 3's bags to the bag scanner to be scanned.
+Queue in line 1 received passenger 5.
+Queue in line 1 is sending passenger 5 to the body scanner to be scanned.
+Bag Scanner in line 2 is sending passenger 2's bags, which failed, to security.
+---> Bag Scanner in line 1 received passenger 3's bags.
+---> Bag Scanner in line 1 is sending passenger 3's bags, which failed, to security.
+---> Body Scanner in line 1 received passenger 3.
+Queue in line 1 is sending passenger 5's bags to the bag scanner to be scanned.
+Security Station in line 1 received passenger 1's bags which passed its scan.
+Bag Scanner in line 1 received passenger 5's bags.
+Bag Scanner in line 1 is sending passenger 5's bags, which passed, to security to wait for their passenger.
+Queue in line 2 received passenger 4.
+Queue in line 2 is sending passenger 4 to the body scanner to be scanned.
+Queue in line 2 is sending passenger 4's bags to the bag scanner to be scanned.
+Bag Scanner in line 2 received passenger 4's bags.
+Bag Scanner in line 2 is sending passenger 4's bags, which failed, to security.
+---> Body Scanner in line 1 is sending passenger 3, who passed, to security to wait for their bag.
+Body Scanner in line 2 received passenger 4.
+Body Scanner in line 2 is sending passenger 4, who passed, to security to wait for their bag.
+Body Scanner in line 1 received passenger 5.
+Body Scanner in line 1 is sending passenger 5, who passed, to security to wait for their bag.
+Security Station in line 1 received passenger 1's bags which passed its scan.
+---> Security Station in line 1 received passenger 3's bags which failed its scan.
+Security Station in line 2 received passenger 2's bags which failed its scan.
+Security Station in line 2 is sending passenger 2 to jail because their bag scan failed.
+---> Security Station in line 1 is sending passenger 3 to jail because their bag scan failed.
+Security Station in line 1 received passenger 5's bags which passed its scan.
+Security Station in line 2 received passenger 4's bags which failed its scan.
+---> Security Station in line 1 received passenger 3's bags which passed its scan.
+Passenger 2 is entering jail.
+Security Station in line 2 is sending passenger 4 to jail because their bag scan failed.
+Security Station in line 1 received passenger 5's bags which passed its scan.
+Security Station in line 2 received passenger 4's bags which passed its scan.
+---> Passenger 3 is entering jail.
+Passenger 4 is entering jail.
+Shutting down Line
+Shutting down Line
+Shutting down Queue
+Shutting down Queue
+Shutting down Body Scanner
+Shutting down Baggage Scanner
+Shutting down Baggage Scanner
+Shutting down Body Scanner
+Shutting down Security Scanner
+Shutting down Security Scanner
+Passenger 2 is being sent to permanent detention.
+---> Passenger 3 is being sent to permanent detention.
+Passenger 4 is being sent to permanent detention.
+Shutting down Jail
