@@ -12,7 +12,7 @@ External Frameworks:
 
 Compilation:
     Executable:
-        We have provided you with an executable jar, so there is no compilation necessary.
+        We have provided you with an executable, so there is no compilation necessary.
 
     Intellij:
         If you wish to put this into an Intellij project, you must start a Maven project
@@ -22,7 +22,7 @@ Compilation:
 
 Execution:
     Command Line argument to run executable:
-
+        Go into the Executable folder in the zip and enter the command "run.bat"
 
     In intellij:
         Just run the project like you would run any other with Driver as the running
@@ -32,6 +32,3 @@ Execution:
 Command Line Arguments:
     When executed, it will prompt you for the number of passengers and number of lines.
     Just enter a number when asked.
-
-
-
