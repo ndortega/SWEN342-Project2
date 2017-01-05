@@ -1,6 +1,6 @@
 import java.util.Scanner
 
-import akka.actor.{Actor, ActorRef, ActorSystem, PoisonPill, Props}
+import akka.actor.{ ActorRef, ActorSystem, Props}
 
 import scala.collection.mutable.ArrayBuffer
 import scala.util.Random
@@ -15,9 +15,11 @@ import scala.util.Random
   * scanner is turned off.
   */
 object Driver {
-  val usage = """
-   Usage: driver [max-passengers num] [max-Lines num]
-              """
+
+  /**
+      Usage: driver [max-passengers num] [max-Lines num]
+  */
+
   var MAX_LINES: Int = 0
   var MAX_PASSENGERS: Int = 0
 
@@ -64,7 +66,7 @@ object Driver {
 
     // create all passengers
     val allPassengers = new ArrayBuffer[PASSENGER]
-    for( i <- 0 to MAX_PASSENGERS ) allPassengers += new PASSENGER(i+1)
+    for( i <- 0 to MAX_PASSENGERS ) allPassengers += PASSENGER(i+1)
 
     // check the passengers documents and collect all the ones that pass
     val approvedPassengers = allPassengers.collect( documentCheck() )
@@ -87,7 +89,9 @@ object Driver {
 
   /**
     * This method simulates the an inspection which the passenger fails 20%
-    * of the time
+    * of the time.
+    *
+    * Failure Range is (0,19) inclusive and the passing range is (20,99) inclusive
     *
     * The method gets passed an Passenger and if the randomly generated number
     * passes our test, then the same Passenger is returned and added to the
@@ -99,7 +103,7 @@ object Driver {
     * @return returns false 20% of the time
     */
   def documentCheck(): PartialFunction[PASSENGER,PASSENGER] ={
-    case x if Random.nextInt(100) > 20 => x
+    case x if Random.nextInt(100) >= 20 => x
     case default => println("passenger " + default.id +" rejected"); null; // default case
   }
 
